@@ -4,10 +4,10 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
 /**
- * Unit Tests para ValidationUtils
- * Prueba la lógica de validación de datos de usuario
+ * Unit Tests adicionales para ValidationUtils
+ * Prueba la lógica de validación de datos de usuario usando Truth
  */
-class ValidationUtilsTest {
+class ValidationUtilsExtraTest {
 
  @Test
  fun `isValidEmail should return true for valid email`() {
@@ -21,7 +21,7 @@ class ValidationUtilsTest {
  // When & Then
  validEmails.forEach { email ->
  val result = ValidationUtils.isValidEmail(email)
- assertThat(result).isTrue()
+ assertThat(result.isValid).isTrue()
  }
  }
 
@@ -39,7 +39,7 @@ class ValidationUtilsTest {
  // When & Then
  invalidEmails.forEach { email ->
  val result = ValidationUtils.isValidEmail(email)
- assertThat(result).isFalse()
+ assertThat(result.isValid).isFalse()
  }
  }
 
@@ -55,7 +55,7 @@ class ValidationUtilsTest {
  // When & Then
  validPasswords.forEach { password ->
  val result = ValidationUtils.isValidPassword(password)
- assertThat(result).isTrue()
+ assertThat(result.isValid).isTrue()
  }
  }
 
@@ -71,7 +71,7 @@ class ValidationUtilsTest {
  // When & Then
  invalidPasswords.forEach { password ->
  val result = ValidationUtils.isValidPassword(password)
- assertThat(result).isFalse()
+ assertThat(result.isValid).isFalse()
  }
  }
 }

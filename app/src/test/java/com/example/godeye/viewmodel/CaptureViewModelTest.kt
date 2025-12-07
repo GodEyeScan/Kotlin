@@ -19,8 +19,8 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 
 /**
  * Unit Tests para CaptureViewModel
@@ -66,6 +66,8 @@ class CaptureViewModelTest {
  // Given
  val mockCaptures = listOf(
  CaptureData(
+ id = 1,
+ userEmail = "test@example.com",
  imageUri = "test_uri_1",
  latitude = 19.4326,
  longitude = -99.1332,
@@ -74,6 +76,8 @@ class CaptureViewModelTest {
  detectedPlate = "ABC-123"
  ),
  CaptureData(
+ id = 2,
+ userEmail = "test@example.com",
  imageUri = "test_uri_2",
  latitude = 19.4326,
  longitude = -99.1332,
@@ -99,6 +103,8 @@ class CaptureViewModelTest {
  fun `saveCapture should insert capture and return success`() = runTest {
  // Given
  val captureData = CaptureData(
+ id = 1,
+ userEmail = "test@example.com",
  imageUri = "test_uri",
  latitude = 19.4326,
  longitude = -99.1332,
@@ -122,6 +128,8 @@ class CaptureViewModelTest {
  fun `deleteCapture should remove capture successfully`() = runTest {
  // Given
  val captureData = CaptureData(
+ id = 1,
+ userEmail = "test@example.com",
  imageUri = "test_uri",
  latitude = 19.4326,
  longitude = -99.1332,
@@ -144,9 +152,11 @@ class CaptureViewModelTest {
  fun `saveCapture with empty imageUri should return failure`() = runTest {
  // Given
  val invalidCapture = CaptureData(
+ id = 1,
+ userEmail = "test@example.com",
  imageUri = "",
- latitude = null,
- longitude = null,
+ latitude = 0.0,
+ longitude = 0.0,
  timestamp = System.currentTimeMillis(),
  extractedText = "",
  detectedPlate = null
@@ -161,6 +171,7 @@ class CaptureViewModelTest {
 
  // Then
  assertTrue(result.isFailure)
+ coVerify { saveCaptureUseCase(invalidCapture) }
  }
 }
 

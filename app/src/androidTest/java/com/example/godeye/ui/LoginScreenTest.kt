@@ -1,10 +1,13 @@
 package com.example.godeye.ui
 
+import android.app.Application
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.example.godeye.ui.auth.LoginScreen
 import com.example.godeye.ui.theme.GodEyeTheme
+import com.example.godeye.viewmodel.AuthViewModel
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,14 +31,23 @@ class LoginScreenTest {
  @get:Rule
  val composeTestRule = createComposeRule()
 
+ private fun createAuthViewModel(): AuthViewModel {
+ val context = InstrumentationRegistry.getInstrumentation().targetContext
+ val application = context.applicationContext as Application
+ return AuthViewModel(application)
+ }
+
  @Test
  fun loginScreen_displaysAllComponents() {
  // Given
+ val authViewModel = createAuthViewModel()
+
  composeTestRule.setContent {
  GodEyeTheme {
  LoginScreen(
  onLoginSuccess = {},
- onNavigateToRegister = {}
+ onNavigateToRegister = {},
+ authViewModel = authViewModel
  )
  }
  }
@@ -50,11 +62,14 @@ class LoginScreenTest {
  @Test
  fun loginScreen_emailInput_acceptsText() {
  // Given
+ val authViewModel = createAuthViewModel()
+
  composeTestRule.setContent {
  GodEyeTheme {
  LoginScreen(
  onLoginSuccess = {},
- onNavigateToRegister = {}
+ onNavigateToRegister = {},
+ authViewModel = authViewModel
  )
  }
  }
@@ -70,11 +85,14 @@ class LoginScreenTest {
  @Test
  fun loginScreen_passwordInput_hidesText() {
  // Given
+ val authViewModel = createAuthViewModel()
+
  composeTestRule.setContent {
  GodEyeTheme {
  LoginScreen(
  onLoginSuccess = {},
- onNavigateToRegister = {}
+ onNavigateToRegister = {},
+ authViewModel = authViewModel
  )
  }
  }
@@ -91,11 +109,14 @@ class LoginScreenTest {
  fun loginScreen_clickRegisterButton_triggersNavigation() {
  // Given
  var registerClicked = false
+ val authViewModel = createAuthViewModel()
+
  composeTestRule.setContent {
  GodEyeTheme {
  LoginScreen(
  onLoginSuccess = {},
- onNavigateToRegister = { registerClicked = true }
+ onNavigateToRegister = { registerClicked = true },
+ authViewModel = authViewModel
  )
  }
  }
