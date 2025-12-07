@@ -44,7 +44,7 @@ fun CaptureListScreen(
  // Forzar recarga de datos del usuario actual al abrir la pantalla
  androidx.compose.runtime.LaunchedEffect(currentUser?.email) {
  currentUser?.email?.let { email ->
- android.util.Log.d("CaptureListScreen", "Recargando datos para usuario: $email")
+ android.util.Log.d("CaptureListScreen", "LaunchedEffect ejecutado para usuario: $email")
  android.util.Log.d("CaptureListScreen", "Captures actuales en lista: ${captures.size}")
 
  // Debug: Ver cuántas capturas hay por usuario en BD
@@ -55,6 +55,7 @@ fun CaptureListScreen(
  }
  android.util.Log.d("CaptureListScreen", "========================================")
 
+ // setCurrentUser ya verifica si es el mismo usuario, no hay problema en llamarlo
  viewModel.setCurrentUser(email)
  }
  }

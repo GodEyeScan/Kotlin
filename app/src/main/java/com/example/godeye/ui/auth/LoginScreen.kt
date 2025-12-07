@@ -63,7 +63,7 @@ fun LoginScreen(
 
  // Título
  Text(
- text = "GodEye",
+ text = "GEODE",
  style = MaterialTheme.typography.headlineLarge,
  color = MaterialTheme.colorScheme.primary
  )
@@ -192,7 +192,7 @@ fun LoginScreen(
  },
  title = {
  Text(
- text = "Bienvenido a GodEye",
+ text = "Bienvenido a GEODE",
  style = MaterialTheme.typography.headlineSmall
  )
  },

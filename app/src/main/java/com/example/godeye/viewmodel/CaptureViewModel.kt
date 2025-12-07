@@ -80,11 +80,19 @@ class CaptureViewModel(application: Application) : AndroidViewModel(application)
  */
  fun setCurrentUser(email: String) {
  android.util.Log.d("CaptureViewModel", "setCurrentUser llamado para: $email")
+ android.util.Log.d("CaptureViewModel", "Usuario anterior: $currentUserEmail")
+
+ // Si es el mismo usuario, no hacer nada
+ if (currentUserEmail == email) {
+ android.util.Log.d("CaptureViewModel", "Mismo usuario, no se requiere cambio")
+ return
+ }
 
  // Cancelar el Job anterior (detiene el Flow anterior)
  capturesJob?.cancel()
+ capturesJob = null
 
- // Limpiar datos del usuario anterior
+ // Limpiar datos del usuario anterior COMPLETAMENTE
  _captures.clear()
  _plateAlert.value = null
  _errorMessage.value = null
@@ -116,15 +124,6 @@ class CaptureViewModel(application: Application) : AndroidViewModel(application)
  android.util.Log.d("CaptureViewModel", "Datos limpiados completamente. Captures size: ${_captures.size}")
  }
 
- private fun loadCapturesFromDatabase() {
- viewModelScope.launch {
- captureDao.getAllCaptures().collect { entities ->
- _captures.clear()
- _captures.addAll(entities.map { it.toCaptureData() })
- }
- }
- }
-
  /**
  * Carga solo las capturas del usuario especificado
  */
@@ -132,11 +131,21 @@ class CaptureViewModel(application: Application) : AndroidViewModel(application)
  android.util.Log.d("CaptureViewModel", "loadCapturesForUser iniciado para: $email")
 
  capturesJob = viewModelScope.launch {
+ try {
  captureDao.getCapturesByUser(email).collect { entities ->
+ // Verificar que todavía estamos cargando para el mismo usuario
+ if (currentUserEmail == email) {
  android.util.Log.d("CaptureViewModel", "Flow emitió ${entities.size} capturas para: $email")
  _captures.clear()
  _captures.addAll(entities.map { it.toCaptureData() })
  android.util.Log.d("CaptureViewModel", "Captures actualizado. Size: ${_captures.size}")
+ } else {
+ android.util.Log.w("CaptureViewModel", "Usuario cambió durante carga. Ignorando datos de: $email")
+ }
+ }
+ } catch (e: Exception) {
+ android.util.Log.e("CaptureViewModel", "Error cargando capturas: ${e.message}", e)
+ _errorMessage.value = "Error al cargar capturas: ${e.message}"
  }
  }
  }
@@ -275,8 +284,16 @@ class CaptureViewModel(application: Application) : AndroidViewModel(application)
  _isLoading.value = true
  _errorMessage.value = null
 
- // Por ahora usamos la base de datos local + sincronizamos
- loadCapturesFromDatabase()
+ // Cargar solo las capturas del usuario actual desde la BD local
+ val email = currentUserEmail
+ if (email != null) {
+ android.util.Log.d("CaptureViewModel", "loadUserReportsFromApi - cargando para: $email")
+ // No llamar loadCapturesFromDatabase() porque carga TODAS las capturas
+ // El Flow en loadCapturesForUser ya se encarga de mantener actualizada la lista
+ } else {
+ android.util.Log.w("CaptureViewModel", "loadUserReportsFromApi - no hay usuario actual")
+ }
+ 
  _isLoading.value = false
  }
  }
