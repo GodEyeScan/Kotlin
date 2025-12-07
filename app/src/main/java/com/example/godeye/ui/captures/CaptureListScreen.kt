@@ -126,12 +126,13 @@ fun CaptureListScreen(
  }
  }
 
- // Mostrar error si existe
- viewModel.errorMessage.value?.let { error ->
- androidx.compose.runtime.LaunchedEffect(error) {
- // Aquí podrías mostrar un Snackbar o Toast
- }
- }
+        // Mostrar error si existe
+        viewModel.errorMessage.value?.let { error ->
+            androidx.compose.runtime.LaunchedEffect(error) {
+                // Aquí podrías mostrar un Snackbar o Toast
+            }
+        }
+    }
 }
 
 @Composable
@@ -288,3 +289,4 @@ fun CaptureCard(
  }
  }
 }
+
