@@ -1,4 +1,4 @@
-# GEODE - Documentación Completa Unificada
+# GodEye - Documentación Completa Unificada
 
 **Versión:** 5.0  
 **Fecha:** 2025-12-07  
@@ -23,7 +23,7 @@
 
 ## Introducción
 
-**GEODE** es una aplicación Android que permite detectar automáticamente placas vehiculares mediante la cámara, verificar si están reportadas, y crear reportes de vehículos sospechosos o infractores.
+**GodEye** es una aplicación Android que permite detectar automáticamente placas vehiculares mediante la cámara, verificar si están reportadas, y crear reportes de vehículos sospechosos o infractores.
 
 ### Características Destacadas
 
@@ -452,7 +452,7 @@ LaunchedEffect(authViewModel.currentUser.value?.name, loginSuccessful) {
 
 // Diálogo
 AlertDialog(
-    title = { Text("Bienvenido a GEODE") },
+    title = { Text("Bienvenido a GodEye") },
     text = { Text("Hola $userName, has iniciado sesion exitosamente.") },
     confirmButton = { Button(onClick = { ... }) { Text("Continuar") } }
 )
@@ -969,7 +969,7 @@ GET /reports/check/TEST999
 
 **Solución:**
 ```
-Configuración → Apps → GEODE → Almacenamiento → Limpiar datos
+Configuración → Apps → GodEye → Almacenamiento → Limpiar datos
 ```
 
 O reinstalar la app.
@@ -1014,7 +1014,7 @@ Si no aparece, el perfil no está en BD.
 
 **Solución:**
 ```
-Configuración → Apps → GEODE → Permisos
+Configuración → Apps → GodEye → Permisos
 Activar:
 - Cámara
 - Ubicación
@@ -1094,7 +1094,7 @@ W/CaptureViewModel: NO se creará reporte duplicado
 
 ## Información de Contacto
 
-**Proyecto:** GEODE 
+**Proyecto:** GodEye 
 **Versión:** 4.0 
 **Base de Datos:** Versión 4 
 **API:** v2 

@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "GEODE"
+rootProject.name = "GodEye"
 include(":app")
